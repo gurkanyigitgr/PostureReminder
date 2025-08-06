@@ -20,6 +20,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { StorageService } from "../services/storageService";
 import { Colors } from "../utils/colors";
+import { NotificationService } from "../services/notificationService";
 
 const { width, height } = Dimensions.get("window");
 
@@ -198,6 +199,16 @@ export const MainScreen: React.FC<Props> = ({ onSettings }) => {
                   </Text>
                 </View>
               </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={() => NotificationService.sendTestNotification()}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.actionButtonTitle}>
+                🧪 DEBUG: Test Notification
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity

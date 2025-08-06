@@ -33,6 +33,7 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
   const [startHour, setStartHour] = useState(9);
   const [endHour, setEndHour] = useState(22);
   const [reminderInterval, setReminderInterval] = useState(30);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Animation values (same as other screens)
   const waveAnimation = useSharedValue(0);
@@ -64,14 +65,31 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
   };
 
   const handleSave = async () => {
-    await StorageService.saveNotificationHours(startHour, endHour);
-    await StorageService.saveNotificationInterval(reminderInterval);
+    setIsSaving(true);
 
-    Alert.alert(
-      "Settings Saved! ✅",
-      "Your preferences have been updated successfully.",
-      [{ text: "Done", onPress: onBack }]
-    );
+    try {
+      await StorageService.saveNotificationHours(startHour, endHour);
+      await StorageService.saveNotificationInterval(reminderInterval);
+
+      // Success feedback
+      Alert.alert(
+        "✅ Settings Saved!",
+        `Your preferences have been updated:\n\n⏰ Active Hours: ${formatHour(
+          startHour
+        )} - ${formatHour(
+          endHour
+        )}\n🔔 Reminder: Every ${reminderInterval} minutes\n\nChanges will take effect immediately.`,
+        [{ text: "Perfect!", onPress: onBack }]
+      );
+    } catch (error) {
+      Alert.alert(
+        "❌ Save Failed",
+        "Could not save your settings. Please try again.",
+        [{ text: "Retry" }]
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Animated styles
@@ -231,18 +249,31 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
               {/* Action Buttons */}
               <Animated.View style={[styles.buttonContainer, fadeInStyle]}>
                 <TouchableOpacity
-                  style={styles.saveButton}
+                  style={[
+                    styles.saveButton,
+                    isSaving && styles.saveButtonLoading,
+                  ]}
                   onPress={handleSave}
                   activeOpacity={0.8}
+                  disabled={isSaving}
                 >
                   <LinearGradient
-                    colors={[
-                      "rgba(255, 255, 255, 0.3)",
-                      "rgba(255, 255, 255, 0.1)",
-                    ]}
+                    colors={
+                      isSaving
+                        ? [
+                            "rgba(255, 255, 255, 0.15)",
+                            "rgba(255, 255, 255, 0.05)",
+                          ]
+                        : [
+                            "rgba(255, 255, 255, 0.3)",
+                            "rgba(255, 255, 255, 0.1)",
+                          ]
+                    }
                     style={styles.buttonGradient}
                   >
-                    <Text style={styles.saveButtonText}>Save Changes</Text>
+                    <Text style={styles.saveButtonText}>
+                      {isSaving ? "Saving..." : "Save Changes"}
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
 
@@ -468,5 +499,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "rgba(255, 255, 255, 0.7)",
+  },
+  saveButtonLoading: {
+    opacity: 0.7,
   },
 });
