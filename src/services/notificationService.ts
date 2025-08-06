@@ -167,7 +167,13 @@ export class NotificationService {
                 scheduledFor: notificationTime.toISOString(),
               },
             },
-            trigger: notificationTime as any,
+            trigger: {
+              type: "timeInterval",
+              seconds: Math.max(
+                1,
+                Math.floor((notificationTime.getTime() - Date.now()) / 1000)
+              ),
+            } as any,
           });
         }
       }
