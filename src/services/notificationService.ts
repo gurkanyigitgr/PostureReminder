@@ -94,7 +94,7 @@ export class NotificationService {
 
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "PostureReminder 🧘‍♀️",
+          title: "Posture Reminder 🧘‍♀️",
           body: message,
           vibrate: [0, 250, 250, 250],
           sound: "../../assets/sound.wav",
@@ -155,7 +155,7 @@ export class NotificationService {
 
           await Notifications.scheduleNotificationAsync({
             content: {
-              title: "PostureReminder 🧘‍♀️",
+              title: "Posture Reminder 🧘‍♀️",
               body: message,
               vibrate: [0, 250, 250, 250],
               sound: "../../assets/sound.wav",
@@ -207,7 +207,7 @@ export class NotificationService {
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "PostureReminder Test 🧪",
+          title: "Posture Reminder Test 🧪",
           body: "This is how your posture reminders will look! Looking good? 👍",
           vibrate: [0, 250, 250, 250],
           sound: "../../assets/sound.wav",
