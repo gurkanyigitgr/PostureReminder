@@ -11,16 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "plugins": [
       [
         "expo-notifications",
         {
-          "sounds": [
-            "./assets/sound.wav"
-          ]
+          "sounds": ["./assets/sound.wav"]
         }
       ]
     ],
@@ -28,7 +24,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.gurkanyigitgr.posturereminder",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": ["background-processing", "background-fetch"]
       }
     },
     "android": {

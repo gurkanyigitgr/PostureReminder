@@ -97,7 +97,7 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
   };
 
   // Interval options
-  const intervalOptions = [15, 30, 45, 60, 90];
+  const intervalOptions = [1, 5, 10, 15, 30, 45, 60, 90];
 
   return (
     <View style={styles.container}>
