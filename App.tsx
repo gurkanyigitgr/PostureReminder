@@ -29,8 +29,8 @@ export default function App() {
       if (isFirst) {
         setAppState("welcome");
       } else {
-        // Start recurring reminders for existing users
-        await NotificationService.scheduleRecurringReminders();
+        // Existing users: Check if we need to reschedule
+        await NotificationService.checkAndRescheduleIfNeeded();
         setAppState("main");
       }
     } catch (error) {

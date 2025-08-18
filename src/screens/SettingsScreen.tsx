@@ -21,6 +21,7 @@ import Animated, {
   withDelay,
 } from "react-native-reanimated";
 import { StorageService } from "../services/storageService";
+import { NotificationService } from "../services/notificationService";
 import { Colors } from "../utils/colors";
 
 const { width, height } = Dimensions.get("window");
@@ -68,8 +69,13 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
     setIsSaving(true);
 
     try {
+      // Önce ayarları kaydet
       await StorageService.saveNotificationHours(startHour, endHour);
       await StorageService.saveNotificationInterval(reminderInterval);
+
+      // ÖNEMLİ: Notification schedule'ı yeniden başlat
+      console.log("🔄 Rescheduling notifications with new settings...");
+      await NotificationService.scheduleRecurringReminders();
 
       // Success feedback
       Alert.alert(
@@ -82,6 +88,7 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
         [{ text: "Perfect!", onPress: onBack }]
       );
     } catch (error) {
+      console.error("Error saving settings:", error);
       Alert.alert(
         "❌ Save Failed",
         "Could not save your settings. Please try again.",

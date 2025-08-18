@@ -206,9 +206,43 @@ export const MainScreen: React.FC<Props> = ({ onSettings }) => {
               onPress={() => NotificationService.sendTestNotification()}
               activeOpacity={0.8}
             >
-              <Text style={styles.actionButtonTitle}>
-                🧪 DEBUG: Test Notification
-              </Text>
+              <LinearGradient
+                colors={[
+                  "rgba(255, 255, 255, 0.25)",
+                  "rgba(255, 255, 255, 0.15)",
+                ]}
+                style={styles.actionButtonGradient}
+              >
+                <Text style={styles.actionButtonEmoji}>🧪</Text>
+                <View style={styles.actionButtonText}>
+                  <Text style={styles.actionButtonTitle}>Test Notification</Text>
+                  <Text style={styles.actionButtonSubtitle}>
+                    Send a test reminder now
+                  </Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={() => NotificationService.debugScheduledNotifications()}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={[
+                  "rgba(255, 255, 255, 0.25)",
+                  "rgba(255, 255, 255, 0.15)",
+                ]}
+                style={styles.actionButtonGradient}
+              >
+                <Text style={styles.actionButtonEmoji}>📋</Text>
+                <View style={styles.actionButtonText}>
+                  <Text style={styles.actionButtonTitle}>Debug Notifications</Text>
+                  <Text style={styles.actionButtonSubtitle}>
+                    Check scheduled notifications
+                  </Text>
+                </View>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
