@@ -2,6 +2,7 @@
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
+// import { Asset } from "expo-asset"; // Geçici olarak comment out
 import { StorageService } from "./storageService";
 
 // BASİT VE ÇALIŞAN NOTIFICATION HANDLER
@@ -105,6 +106,21 @@ export class NotificationService {
     return hasPermission;
   }
 
+  // Get sound for notifications - Basit yaklaşım
+  static getCustomSound(): string | null {
+    try {
+      // Platform-specific sound handling
+      if (Platform.OS === 'android') {
+        return 'sound.wav'; // Android res/raw klasöründeki dosya
+      } else {
+        return 'sound.wav'; // iOS bundle'daki dosya
+      }
+    } catch (error) {
+      console.error("❌ Error getting custom sound:", error);
+      return null;
+    }
+  }
+
   // Get random message
   static getRandomReminderMessage(userName: string): string {
     const messages = [
@@ -126,8 +142,10 @@ export class NotificationService {
 
       const userName = (await StorageService.getUserName()) || "there";
       const intervalMinutes = await StorageService.getNotificationInterval();
+      const customSound = this.getCustomSound();
 
       console.log(`📅 Starting recurring notifications every ${intervalMinutes} minutes`);
+      console.log(`🔊 Custom sound: ${customSound}`);
 
       // EXPO DOCS'TAKİ GİBİ - SchedulableTriggerInputTypes.TIME_INTERVAL kullan
       await Notifications.scheduleNotificationAsync({
@@ -135,7 +153,7 @@ export class NotificationService {
           title: "Posture Reminder 🧘‍♀️",
           body: this.getRandomReminderMessage(userName),
           vibrate: [0, 250, 250, 250],
-          sound: "../../assets/sound.wav",
+          sound: customSound || 'default',
           ...(Platform.OS === "android" && {
             channelId: "posture-reminders",
           }),
@@ -177,13 +195,14 @@ export class NotificationService {
   static async sendTestNotification(): Promise<void> {
     try {
       const userName = (await StorageService.getUserName()) || "there";
+      const customSound = this.getCustomSound();
       
       await Notifications.scheduleNotificationAsync({
         content: {
           title: "Posture Reminder Test 🧪",
           body: `Hi ${userName}! This is a test notification! 👍`,
           vibrate: [0, 250, 250, 250],
-          sound: "../../assets/sound.wav",
+          sound: customSound || 'default',
           ...(Platform.OS === "android" && {
             channelId: "posture-reminders",
           }),
@@ -248,13 +267,14 @@ export class NotificationService {
     try {
       const userName = (await StorageService.getUserName()) || "there";
       const message = this.getRandomReminderMessage(userName);
+      const customSound = this.getCustomSound();
 
       await Notifications.scheduleNotificationAsync({
         content: {
           title: "Posture Reminder 🧘‍♀️",
           body: message,
           vibrate: [0, 250, 250, 250],
-          sound: "../../assets/sound.wav",
+          sound: customSound || 'default',
           ...(Platform.OS === "android" && {
             channelId: "posture-reminders",
           }),

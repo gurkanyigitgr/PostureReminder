@@ -11,21 +11,29 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "plugins": [
       [
         "expo-notifications",
         {
-          "sounds": ["./assets/sound.wav"]
+          "sounds": [
+            "./assets/sound.wav"
+          ]
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gurkanyigitgr.posturereminder",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": ["background-processing", "background-fetch"]
+        "UIBackgroundModes": [
+          "background-processing",
+          "background-fetch"
+        ]
       }
     },
     "android": {
