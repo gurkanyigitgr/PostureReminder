@@ -105,7 +105,7 @@ export const WelcomeScreen: React.FC<Props> = ({ onNext }) => {
             <View style={styles.titleContainer}>
               <Text style={styles.welcomeText}>Welcome to</Text>
               <Animated.View style={waveStyle}>
-                <Text style={styles.appName}>PostureReminder</Text>
+                <Text style={styles.appName}>Posture Good</Text>
               </Animated.View>
             </View>
 

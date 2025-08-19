@@ -152,7 +152,7 @@ export const SettingsScreen: React.FC<Props> = ({ onBack }) => {
                 </View>
                 <Text style={styles.title}>Settings</Text>
                 <Text style={styles.subtitle}>
-                  Customize your posture reminder preferences
+                  Customize your posture well preferences
                 </Text>
               </Animated.View>
 

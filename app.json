@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Posture Reminder",
-    "slug": "posture-reminder",
+    "name": "Posture Good",
+    "slug": "posture-good",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,16 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "plugins": [
       [
         "expo-notifications",
         {
-          "sounds": [
-            "./assets/sound.wav"
-          ]
+          "sounds": ["./assets/sound.wav"]
         }
       ],
       "expo-asset"
@@ -29,11 +25,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.gurkanyigitgr.posturereminder",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": [
-          "background-processing",
-          "background-fetch"
-        ]
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {

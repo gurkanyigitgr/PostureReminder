@@ -130,6 +130,10 @@ export const MainScreen: React.FC<Props> = ({ onSettings }) => {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
+          <Animated.View style={[styles.appTitleSection, fadeInStyle]}>
+            <Text style={styles.appTitle}>Posture Good</Text>
+            <Text style={styles.appSubtitle}>Your Posture Companion</Text>
+          </Animated.View>
           {/* Header Section */}
           <Animated.View style={[styles.headerSection, fadeInStyle]}>
             <View style={styles.welcomeCard}>
@@ -280,6 +284,26 @@ const styles = StyleSheet.create({
   // Header Section
   headerSection: {
     marginBottom: 24,
+  },
+  appTitleSection: {
+    marginBottom: 24,
+    alignItems: "center",
+  },
+  appTitle: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    textAlign: "center",
+    textShadowColor: "rgba(104, 32, 248, 0.53)",
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 8,
+    marginBottom: 4,
+  },
+  appSubtitle: {
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.8)",
+    textAlign: "center",
+    fontWeight: "500",
   },
   welcomeCard: {
     backgroundColor: "rgba(49, 16, 147, 0.26)",

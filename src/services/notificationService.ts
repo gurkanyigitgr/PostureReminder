@@ -23,9 +23,11 @@ Notifications.setNotificationHandler({
       // Normal reminder için saat kontrolü
       const { start, end } = await StorageService.getNotificationHours();
       const currentHour = new Date().getHours();
-      
+
       if (currentHour >= start && currentHour < end) {
-        console.log(`✅ Notification approved - hour ${currentHour} is within ${start}-${end}`);
+        console.log(
+          `✅ Notification approved - hour ${currentHour} is within ${start}-${end}`
+        );
         return {
           shouldPlaySound: true,
           shouldSetBadge: true,
@@ -33,7 +35,9 @@ Notifications.setNotificationHandler({
           shouldShowList: true,
         };
       } else {
-        console.log(`❌ Notification blocked - hour ${currentHour} is outside ${start}-${end}`);
+        console.log(
+          `❌ Notification blocked - hour ${currentHour} is outside ${start}-${end}`
+        );
         return {
           shouldPlaySound: false,
           shouldSetBadge: false,
@@ -81,7 +85,8 @@ export class NotificationService {
     let hasPermission = false;
 
     if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
 
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
@@ -110,10 +115,10 @@ export class NotificationService {
   static getCustomSound(): string | null {
     try {
       // Platform-specific sound handling
-      if (Platform.OS === 'android') {
-        return 'sound.wav'; // Android res/raw klasöründeki dosya
+      if (Platform.OS === "android") {
+        return "sound.wav"; // Android res/raw klasöründeki dosya
       } else {
-        return 'sound.wav'; // iOS bundle'daki dosya
+        return "sound.wav"; // iOS bundle'daki dosya
       }
     } catch (error) {
       console.error("❌ Error getting custom sound:", error);
@@ -144,16 +149,18 @@ export class NotificationService {
       const intervalMinutes = await StorageService.getNotificationInterval();
       const customSound = this.getCustomSound();
 
-      console.log(`📅 Starting recurring notifications every ${intervalMinutes} minutes`);
+      console.log(
+        `📅 Starting recurring notifications every ${intervalMinutes} minutes`
+      );
       console.log(`🔊 Custom sound: ${customSound}`);
 
       // EXPO DOCS'TAKİ GİBİ - SchedulableTriggerInputTypes.TIME_INTERVAL kullan
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "Posture Reminder 🧘‍♀️",
+          title: "Posture Good 🧘‍♀️",
           body: this.getRandomReminderMessage(userName),
           vibrate: [0, 250, 250, 250],
-          sound: customSound || 'default',
+          sound: customSound || "default",
           ...(Platform.OS === "android" && {
             channelId: "posture-reminders",
           }),
@@ -169,13 +176,16 @@ export class NotificationService {
         },
       });
 
-      console.log(`✅ Recurring notification scheduled for every ${intervalMinutes} minutes`);
-      
+      console.log(
+        `✅ Recurring notification scheduled for every ${intervalMinutes} minutes`
+      );
+
       // Recurring notifications getAllScheduledNotificationsAsync'de görünmeyebilir
       // Bu normal bir davranış
       const count = await this.getScheduledNotificationsCount();
-      console.log(`📊 Visible scheduled notifications: ${count} (recurring notifications may not be visible)`);
-      
+      console.log(
+        `📊 Visible scheduled notifications: ${count} (recurring notifications may not be visible)`
+      );
     } catch (error) {
       console.error("❌ Error scheduling notifications:", error);
     }
@@ -196,13 +206,13 @@ export class NotificationService {
     try {
       const userName = (await StorageService.getUserName()) || "there";
       const customSound = this.getCustomSound();
-      
+
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "Posture Reminder Test 🧪",
+          title: "Posture Good Test 🧪",
           body: `Hi ${userName}! This is a test notification! 👍`,
           vibrate: [0, 250, 250, 250],
-          sound: customSound || 'default',
+          sound: customSound || "default",
           ...(Platform.OS === "android" && {
             channelId: "posture-reminders",
           }),
@@ -224,7 +234,8 @@ export class NotificationService {
   // Get scheduled count
   static async getScheduledNotificationsCount(): Promise<number> {
     try {
-      const notifications = await Notifications.getAllScheduledNotificationsAsync();
+      const notifications =
+        await Notifications.getAllScheduledNotificationsAsync();
       return notifications.length;
     } catch (error) {
       console.error("❌ Error getting notifications count:", error);
@@ -235,9 +246,10 @@ export class NotificationService {
   // Debug notifications
   static async debugScheduledNotifications(): Promise<void> {
     try {
-      const notifications = await Notifications.getAllScheduledNotificationsAsync();
+      const notifications =
+        await Notifications.getAllScheduledNotificationsAsync();
       console.log(`📋 Debug: ${notifications.length} scheduled notifications`);
-      
+
       notifications.forEach((notification, index) => {
         const trigger = notification.trigger as any;
         console.log(`${index + 1}. ${notification.content.title}`);
@@ -252,11 +264,10 @@ export class NotificationService {
   static async checkAndRescheduleIfNeeded(): Promise<void> {
     try {
       console.log(`🔍 Initializing recurring notifications...`);
-      
+
       // Recurring notifications için her zaman yeniden schedule et
       // Çünkü getAllScheduledNotificationsAsync recurring'leri görmeyebilir
       await this.scheduleRecurringReminders();
-      
     } catch (error) {
       console.error("❌ Error checking notifications:", error);
     }
@@ -271,10 +282,10 @@ export class NotificationService {
 
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "Posture Reminder 🧘‍♀️",
+          title: "Posture Good 🧘‍♀️",
           body: message,
           vibrate: [0, 250, 250, 250],
-          sound: customSound || 'default',
+          sound: customSound || "default",
           ...(Platform.OS === "android" && {
             channelId: "posture-reminders",
           }),
